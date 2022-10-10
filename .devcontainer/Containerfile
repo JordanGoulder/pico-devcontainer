@@ -1,0 +1,35 @@
+FROM debian:bullseye
+
+# Install required dependencies needed for building applications for the Raspberry Pi Pico
+RUN     apt-get update \
+    &&  DEBIAN_FRONTEND=noninteractive \
+        apt-get install -y \
+        build-essential \
+        cmake \
+        python3 \
+        git \
+        gcc-arm-none-eabi \
+        libnewlib-arm-none-eabi \
+        libstdc++-arm-none-eabi-newlib
+
+# Download Raspberry Pi Pico SDK and examples repositories
+RUN     mkdir pico \
+    &&  cd pico \
+    &&  git clone "https://github.com/raspberrypi/pico-sdk.git" \
+    &&  cd pico-sdk \
+    &&  git submodule update --init \
+    &&  cd ../ \
+    &&  git clone "https://github.com/raspberrypi/pico-examples.git" \
+    &&  cd pico-examples \
+    &&  git submodule update --init \
+    &&  cd ../
+
+# Set environment varialbes for Pico paths
+ENV PICO_SDK_PATH /pico/pico-sdk
+ENV PICO_EXAMPLES_PATH /pico/pico-examples
+
+# Clean up apt data to help reduce image size
+RUN     apt-get autoremove -y \
+    &&  apt-get clean -y \
+    &&  rm -rf /var/lib/apt/lists/*
+

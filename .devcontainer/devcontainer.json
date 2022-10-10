@@ -1,0 +1,6 @@
+{
+    "dockerFile": "Containerfile",
+    "extensions": [
+        "ms-vscode.cpptools-extension-pack"
+    ]
+}
