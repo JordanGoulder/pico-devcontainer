@@ -1,6 +1,10 @@
 {
     "dockerFile": "Containerfile",
-    "extensions": [
-        "ms-vscode.cpptools-extension-pack"
-    ]
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools-extension-pack"
+            ]
+        }
+    }
 }
